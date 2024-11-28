@@ -47,9 +47,15 @@ function displayBlogs(blogs) {
     console.log("Blogs displayed:", blogs); // Debug: Log displayed data
 }
 
-// Filter blogs when the search button is clicked
 function handleSearch() {
     const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
+    const specialCharRegex = /[^a-z0-9\s]/i; // Regex to match special characters
+
+    if (specialCharRegex.test(searchInput)) {
+        document.getElementById('resourceContainer').innerHTML = '<p>Please avoid using special characters in the search.</p>';
+        console.warn("Search contains special characters:", searchInput);
+        return;
+    }
 
     if (searchInput === '') {
         displayBlogs(allBlogs);
@@ -69,6 +75,7 @@ function handleSearch() {
     console.log("Search term:", searchInput);
     console.log("Filtered blogs:", filteredBlogs);
 }
+
 
 // Initialize functionality when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
